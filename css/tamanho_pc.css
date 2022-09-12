@@ -177,3 +177,8 @@ form .Input{
 	background-color: rgba(18, 49, 151);
 	color: #ffe400;
 }
+
+.btnTrab{
+	display: flex;
+	flex-direction: row;
+}
