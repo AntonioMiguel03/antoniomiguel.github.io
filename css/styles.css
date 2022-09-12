@@ -559,6 +559,15 @@ input[type=submit]:hover{
 	height: 150px;
 }
 
+#btnTrab{
+	display: flex;
+	flex-direction: column;
+}
+
+.btnTrabLinha{
+	display: flex;
+	flex-direction: column;
+}
 
 .btTrabLinha {
     margin: 10px;
