@@ -552,11 +552,19 @@ input[type=submit]:hover{
 
 .circular_square{
 	position: relative;
-    float: left;
+    	float: left;
 	margin-left: 2px;
 	border-radius: 50%;
 	width: 150px;
 	height: 150px;
+}
+
+
+.btTrabLinha {
+    margin: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    display: table;
 }
 
 .footer {
