@@ -183,7 +183,9 @@ form .Input{
 	flex-direction: row;
 }
 
-.btnTrabLinha{
-	display: flex;
-	flex-direction: row;
+.btnTrabLinha {
+    display: flex;
+    flex-direction: row;
+    width: 50%;
+    margin-left: 30%;
 }
