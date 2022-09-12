@@ -178,7 +178,12 @@ form .Input{
 	color: #ffe400;
 }
 
-.btnTrab{
+#btnTrab{
+	display: flex;
+	flex-direction: row;
+}
+
+.btnTrabLinha{
 	display: flex;
 	flex-direction: row;
 }
