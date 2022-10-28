@@ -235,7 +235,7 @@ nav .mainMenu .closeMenu {
 
 
 .pt2{
-	background-color: #fe533d;
+	background-color: #8df0b1;
 }
 
 #especialidades{
@@ -437,17 +437,13 @@ nav .mainMenu .closeMenu {
 }
 
 .pt4{
-	background-color: #fe533d;
+	background-color: #e6f576;
 }
 
 .pt4 p{
 	font-size: 1rem;
 	overflow-wrap: break-word;
 	width: 95%;
-}
-
-.pt5{
-	background-color: #ffffff;
 }
 
 #myBtn {
