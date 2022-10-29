@@ -226,29 +226,12 @@
 			</br>
 			<p><center>Antonio Miguel Borges Correa</center></p>
 		</div>
-		
+	    </div>	
 	</body>
 </html>
 
 <script>
-
-function envio() {
-	var   f = document.getElementById('image').value;
-	var   n = document.getElementById('nome').value;
-	var   a = document.getElementById('email').value;
-	var   d = document.getElementById('comentario').value;
-	var ext = f.substring(f.lastIndexOf('.') + 1);
 	
-	if (f != "" && n != "" && a != "" && d != "" && (ext == "jpg" || ext=="png")) {
-		alert("Seus dados foram enviados com sucesso!");
-	}
-	else{
-
-		alert("Insira seus dados corretamente!");
-	}
-}
-
-
 $('#opcoes').on('click', function(){
 	Swal.fire({
 		title: 'Qual o seu idioma?',
