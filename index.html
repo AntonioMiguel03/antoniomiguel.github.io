@@ -235,14 +235,10 @@
 $('#opcoes').on('click', function(){
 	Swal.fire({
 		title: 'Qual o seu idioma?',
-		icon: 'question',	  
 		html:
-		'<a href="curriculo/Antonio_Miguel_Curriculo_PT.pdf" target = "_blank">Português</a> ' +
-		'</br><a href="curriculo/Antonio_Miguel_Curriculum_EN.pdf" target = "_blank">Inglês</a> ',
-		showCloseButton: true,
-		showCancelButton: false,
-		showConfirmButton: false,
-		focusConfirm: false,
+			'<a href="curriculo/Antonio_Miguel_Curriculo_PT.pdf" target = "_blank">Português</a> ' +
+			'</br><a href="curriculo/Antonio_Miguel_Curriculum_EN.pdf" target = "_blank">Inglês</a> ',
+		text: 'Something went wrong!',
 		backdrop: false
 	})
 })
