@@ -174,3 +174,62 @@ nav .mainMenu {
     margin-right: auto;
     display: table;		
 }
+
+
+#contato {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+    text-align: center;
+}
+
+.dvCont {
+	display: flex;
+	flex-direction: row;
+}
+
+#contato img {
+	width: 40%;
+	height: 55%;
+}
+
+#contato h2 {
+	margin-left: 20px;
+	margin-right: 20px;
+	margin-bottom: 20px;
+	font-size: 2em;
+	text-align: center;
+	color: #000;
+}
+
+#contato .dscCNT {
+	text-align: left;
+}
+
+#contato p {
+	text-align: center;	
+	font-size: 2vw;
+}
+
+#contato p a {
+	color: #0000ff;
+	text-decoration: none;
+	font-size: 1.2vw;
+}
+
+#contato p a:hover {
+	color: #a11eb3;
+}
+
+#contato .zapzap {
+	width: 25%;
+	height: 55%;
+}
+
+#contato .gmail {
+	margin-right: 15%;
+}
+
+#contato .txtGmail {
+	margin-left: -5%;
+}
