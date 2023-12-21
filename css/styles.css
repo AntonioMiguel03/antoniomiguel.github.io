@@ -567,6 +567,46 @@ input[type=submit]:hover{
     margin-left: 25%;
 }
 
+
+#contato {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+    text-align: center;
+}
+
+#contato img {
+	width: 15%;
+	height: 15%;
+}
+
+#contato h2 {
+	margin-left: 20px;
+	margin-right: 20px;
+	margin-bottom: 20px;
+	font-size: 2em;
+	text-align: center;
+	color: #000;
+}
+
+#contato .dscCNT {
+	text-align: left;
+}
+
+#contato p {
+	text-align: center;	
+	font-size: 5vw;
+}
+
+#contato p a {
+	color: #0000ff;
+	text-decoration: none;
+}
+
+#contato p a:hover {
+	color: #a11eb3;
+}
+
 .footer {
    position: relative;
    left: 0;
