@@ -9,8 +9,13 @@
 	scroll-behavior: smooth;
 }
 
+body > .skiptranslate {
+    display: none !important;
+}
+
 body{
 	font-family: 'Righteous', cursive;
+	top: 0px !important; 
 }
 
 .profile{
