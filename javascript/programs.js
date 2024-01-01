@@ -18,34 +18,45 @@ function close(){
     mainMenu.style.top = '-100%';
 }
 
-
-function googleTranslateElementInit() {
+/*debugger;*/
+function googleTranslateElementInit() {	
   new google.translate.TranslateElement({ pageLanguage: "pt" }, 'google_translate_element');
 }
 
+var flagImage = document.getElementById("flagImage");  
+flagImage.title = "Translate to English";
+
 function changeLanguageByButtonClick() {
-  var languageInput = document.getElementById("language");
+ /*debugger; F10 vai para frente, F8 vai para o final do codigo*/
+  var languageInput = document.getElementById("language").value;
   var selectField = document.querySelector("#google_translate_element select");
   var flagImage = document.getElementById("flagImage");  
+  
+  flagImage.title = "Translate to English";
 
   if (flagImage) {
     if (flagImage.src.includes("uk_flag.jpg")) {
       // Alterar para bandeira do Brasil e idioma para "en"
       flagImage.src = "img/flag_of_Brazil.png";
-      languageInput.value = "en";
-	  document.querySelector("a[title='Translate to English']").title = "Traduzir para o Português";
+      languageInput = "en";	  
+	  
+	  flagImage.title = "Traduzir para o Português";
     } else {
       // Alterar para bandeira do Reino Unido e idioma para "pt"
       flagImage.src = "img/uk_flag.jpg";
-      languageInput.value = "pt";
-	  location.reload();
+      languageInput = "pt";
+	  /*location.reload();*/
+	  
+	  changeLanguagePortuguese();
+	  return;
     }
 
     for (var i = 0; i < selectField.children.length; i++) {
       var option = selectField.children[i];
       // Encontrar o idioma desejado e alterar o idioma anterior do campo de seleção oculto
-      if (option.value == languageInput.value) {
+      if (option.value == languageInput) {
         selectField.selectedIndex = i;
+		
         // Acionar o evento 'change' posteriormente para traduzir usando a biblioteca do Google
         selectField.dispatchEvent(new Event('change'));		
         break;		
@@ -54,7 +65,23 @@ function changeLanguageByButtonClick() {
   }
 }
 
+function changeLanguagePortuguese() {	
+	var languageInput = "pt";
+	var selectField = document.querySelector("#google_translate_element select");
 
+	for (var i = 0; i < selectField.children.length; i++) {
+	  var option = selectField.children[i];
+	  // Encontrar o idioma desejado e alterar o idioma anterior do campo de seleção oculto
+	  if (option.value == languageInput) {
+		selectField.selectedIndex = i;
+		
+		// Acionar o evento 'change' posteriormente para traduzir usando a biblioteca do Google
+		selectField.dispatchEvent(new Event('change'));		
+		location.reload();
+		break;		
+	  }
+	}
+}
 
 
 
@@ -78,6 +105,16 @@ function scrollFunction() {
 
 // When the user clicks on the button, scroll to the top of the document
 function topFunction() {
+  // Mova o usuário para o topo da página
   document.body.scrollTop = 0;
   document.documentElement.scrollTop = 0;
+
+  // Remova o fragmento da URL
+  if (history.replaceState) {
+    // Use history.replaceState para modificar a URL sem adicionar uma nova entrada ao histórico
+    history.replaceState(null, document.title, window.location.pathname + window.location.search);
+  } else {
+    // Como fallback, modifique a propriedade hash (isso adicionará uma nova entrada ao histórico)
+    window.location.hash = '';
+  }
 }
