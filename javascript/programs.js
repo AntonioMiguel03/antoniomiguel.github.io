@@ -18,25 +18,47 @@ function close(){
     mainMenu.style.top = '-100%';
 }
 
-function googleTranslateElementInit() {
-  new google.translate.TranslateElement({pageLanguage: "pt"}, 'google_translate_element');
-}	
 
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({ pageLanguage: "pt" }, 'google_translate_element');
+}
 
 function changeLanguageByButtonClick() {
-  var language = document.getElementById("language").value;
+  var languageInput = document.getElementById("language");
   var selectField = document.querySelector("#google_translate_element select");
-  for(var i=0; i < selectField.children.length; i++){
-	var option = selectField.children[i];
-	// find desired langauge and change the former language of the hidden selection-field 
-	if(option.value==language){
-	   selectField.selectedIndex = i;
-	   // trigger change event afterwards to make google-lib translate this side
-	   selectField.dispatchEvent(new Event('change'));
-	   break;
-	}
+  var flagImage = document.getElementById("flagImage");  
+
+  if (flagImage) {
+    if (flagImage.src.includes("uk_flag.jpg")) {
+      // Alterar para bandeira do Brasil e idioma para "en"
+      flagImage.src = "img/flag_of_Brazil.png";
+      languageInput.value = "en";
+	  document.querySelector("a[title='Translate to English']").title = "Traduzir para o Português";
+    } else {
+      // Alterar para bandeira do Reino Unido e idioma para "pt"
+      flagImage.src = "img/uk_flag.jpg";
+      languageInput.value = "pt";
+	  location.reload();
+    }
+
+    for (var i = 0; i < selectField.children.length; i++) {
+      var option = selectField.children[i];
+      // Encontrar o idioma desejado e alterar o idioma anterior do campo de seleção oculto
+      if (option.value == languageInput.value) {
+        selectField.selectedIndex = i;
+        // Acionar o evento 'change' posteriormente para traduzir usando a biblioteca do Google
+        selectField.dispatchEvent(new Event('change'));		
+        break;		
+      }
+    }
   }
 }
+
+
+
+
+
+
 
 
 
