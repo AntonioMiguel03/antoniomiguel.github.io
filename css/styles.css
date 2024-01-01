@@ -18,6 +18,11 @@ body{
 	top: 0px !important; 
 }
 
+/*Reload da API do google*/
+.VIpgJd-ZVi9od-aZ2wEe-OiiCO-ti6hGc {
+	display: none !important;
+}
+
 .profile{
 	padding: 5px;
 	width: 120px;
