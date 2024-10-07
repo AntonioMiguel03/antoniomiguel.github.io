@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const translateButton = document.getElementById("legendaIdioma");
     
     // Adicione o event listener após o DOM estar carregado
-    translateButton.addEventListener('click', changeLanguageByButtonClick);
+    //translateButton.addEventListener('click', changeLanguageByButtonClick);
     
     openMenu.addEventListener('click', show);
     closeMenu.addEventListener('click', close);
