@@ -27,43 +27,40 @@ var flagImage = document.getElementById("flagImage");
 flagImage.title = "Translate to English";
 
 function changeLanguageByButtonClick() {
- /*debugger; F10 vai para frente, F8 vai para o final do codigo*/
   var languageInput = document.getElementById("language").value;
   var selectField = document.querySelector("#google_translate_element select");
   var flagImage = document.getElementById("flagImage");  
+
+  if (!selectField) {
+    console.error("Select field for Google Translate not found. Please ensure the Google Translate script is fully loaded.");
+    return; // Impede a execução caso o selectField não esteja disponível
+  }
   
   flagImage.title = "Translate to English";
 
   if (flagImage) {
     if (flagImage.src.includes("uk_flag.jpg")) {
-      // Alterar para bandeira do Brasil e idioma para "en"
       flagImage.src = "img/flag_of_Brazil.png";
       languageInput = "en";	  
-	  
-	  flagImage.title = "Traduzir para o Português";
+      flagImage.title = "Traduzir para o Português";
     } else {
-      // Alterar para bandeira do Reino Unido e idioma para "pt"
       flagImage.src = "img/uk_flag.jpg";
       languageInput = "pt";
-	  /*location.reload();*/
-	  
-	  changeLanguagePortuguese();
-	  return;
+      changeLanguagePortuguese();
+      return;
     }
 
     for (var i = 0; i < selectField.children.length; i++) {
       var option = selectField.children[i];
-      // Encontrar o idioma desejado e alterar o idioma anterior do campo de seleção oculto
       if (option.value == languageInput) {
         selectField.selectedIndex = i;
-		
-        // Acionar o evento 'change' posteriormente para traduzir usando a biblioteca do Google
-        selectField.dispatchEvent(new Event('change'));		
+        selectField.dispatchEvent(new Event('change'));
         break;		
       }
     }
   }
 }
+
 
 function changeLanguagePortuguese() {	
 	var languageInput = "pt";
