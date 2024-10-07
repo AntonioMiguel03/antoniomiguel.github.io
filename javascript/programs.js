@@ -27,49 +27,54 @@ var flagImage = document.getElementById("flagImage");
 flagImage.title = "Translate to English";
 
 function changeLanguageByButtonClick() {
-  var languageInput = document.getElementById("language").value;
-  var selectField = document.querySelector("#google_translate_element select");
-  var flagImage = document.getElementById("flagImage");  
+    var flagImage = document.getElementById("flagImage");  
 
-  if (!selectField) {
-    console.error("Select field for Google Translate not found. Please ensure the Google Translate script is fully loaded.");
-    return; // Impede a execução caso o selectField não esteja disponível
-  }
-  
-  flagImage.title = "Translate to English";
+    if (!flagImage) {
+        console.error("Flag image not found.");
+        return; // Sai da função se o elemento não for encontrado
+    }
 
-  if (flagImage) {
+    flagImage.title = "Translate to English";
+
+    // Verificar o idioma atual da bandeira e ajustar o valor da entrada de idioma
+    var languageInput = document.getElementById("language");
+    var selectField = document.querySelector("#google_translate_element select");
+
+    if (!selectField) {
+        console.error("Google Translate select element not found. Retrying...");
+        waitForTranslateElement(changeLanguageByButtonClick); // Tenta novamente até o elemento estar disponível
+        return;
+    }
+
     if (flagImage.src.includes("uk_flag.jpg")) {
-      flagImage.src = "img/flag_of_Brazil.png";
-      languageInput = "en";	  
-      flagImage.title = "Traduzir para o Português";
+        flagImage.src = "img/flag_of_Brazil.png";
+        languageInput.value = "en";
+        flagImage.title = "Traduzir para o Português";
     } else {
-      flagImage.src = "img/uk_flag.jpg";
-      languageInput = "pt";
-      changeLanguagePortuguese();
-      return;
+        flagImage.src = "img/uk_flag.jpg";
+        languageInput.value = "pt";
+        changeLanguagePortuguese();
+        return;
     }
 
     for (var i = 0; i < selectField.children.length; i++) {
-      var option = selectField.children[i];
-      if (option.value == languageInput) {
-        selectField.selectedIndex = i;
-        selectField.dispatchEvent(new Event('change'));
-        break;		
-      }
+        var option = selectField.children[i];
+        if (option.value == languageInput.value) {
+            selectField.selectedIndex = i;
+            selectField.dispatchEvent(new Event('change'));
+            break;
+        }
     }
-  }
 }
-
 
 function changeLanguagePortuguese() {
     var languageInput = "pt";
     var selectField = document.querySelector("#google_translate_element select");
 
-    // Verificação se o selectField existe
     if (!selectField) {
-        console.error("Select field for Google Translate not found. Please ensure the Google Translate script is fully loaded.");
-        return; // Impede a execução caso o selectField não esteja disponível
+        console.error("Google Translate select element not found. Retrying...");
+        waitForTranslateElement(changeLanguagePortuguese); // Tenta novamente até o elemento estar disponível
+        return;
     }
 
     for (var i = 0; i < selectField.children.length; i++) {
@@ -78,9 +83,20 @@ function changeLanguagePortuguese() {
             selectField.selectedIndex = i;
             selectField.dispatchEvent(new Event('change'));
             location.reload();
-            break;		
+            break;
         }
     }
+}
+
+// Função para aguardar até que o Google Translate carregue o elemento <select>
+function waitForTranslateElement(callback) {
+    var intervalId = setInterval(function () {
+        var selectField = document.querySelector("#google_translate_element select");
+        if (selectField) {
+            clearInterval(intervalId); // Para de verificar quando o elemento estiver presente
+            callback(); // Executa a função original
+        }
+    }, 500); // Verifica a cada 500ms
 }
 
 
