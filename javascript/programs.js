@@ -25,10 +25,12 @@
 
         let i = 0;
         function toggleLanguage() {
-            if (i === 0 || i % 2 == 0)
+            if (i === 0 || i % 2 == 0) {
                     alert("Inglês");
-            else
+            }
+            else {
                     alert("Português);
+                }
             i++;              
         }
 
