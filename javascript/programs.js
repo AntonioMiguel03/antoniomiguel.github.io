@@ -23,8 +23,13 @@
         var flagImage = document.getElementById("flagImage");  
         flagImage.title = "Traduzir para o Inglês"; // O idioma padrão é português
 
+        const i = 0;
         function toggleLanguage() {
-            alert("Teste");
+            if (i === 0 || i % 2 == 0)
+                    alert("Inglês");
+            else
+                    alert("Português);
+            i++;              
         }
 
         // Botão de voltar ao Menu
