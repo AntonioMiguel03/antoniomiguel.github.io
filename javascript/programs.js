@@ -1,65 +1,144 @@
-// Folha do JavaScript
+const mainMenu = document.querySelector(".mainMenu");
+const closeMenu = document.querySelector(".closeMenu");
+const openMenu = document.querySelector(".openMenu");
 
-        const mainMenu = document.querySelector('.mainMenu');
-        const closeMenu = document.querySelector('.closeMenu');
-        const openMenu = document.querySelector('.openMenu');
+openMenu.addEventListener("click", show);
+closeMenu.addEventListener("click", close);
 
-        openMenu.addEventListener('click', show);
-        closeMenu.addEventListener('click', close);
+function show() {
+  mainMenu.style.display = "flex";
+  mainMenu.style.top = "0";
+}
 
-        function show() {
-            mainMenu.style.display = 'flex';
-            mainMenu.style.top = '0';
-        }
+function close() {
+  mainMenu.style.top = "-100%";
+}
 
-        function close() {
-            mainMenu.style.top = '-100%';
-        }
+// Função para alternar o idioma
+var currentLang = "pt"; // Idioma atual
 
-        function googleTranslateElementInit() {    
-            new google.translate.TranslateElement({ pageLanguage: "pt" }, 'google_translate_element');
-        }
+function googleTranslateElementInit2() {
+  new google.translate.TranslateElement(
+    {
+      pageLanguage: "pt",
+      autoDisplay: false,
+    },
+    "google_translate_element2"
+  );
+}
 
-        var flagImage = document.getElementById("flagImage");  
-        flagImage.title = "Traduzir para o Inglês"; // O idioma padrão é português
+function toggleLanguage() {
+  if (currentLang === "pt") {
+    // Carregar o tradutor e mudar para inglês
+    loadTranslate("pt|en");
+    //document.getElementById('toggleLanguage').innerText = 'Mudar para Português';
+    flagImage.src = "img/flag_of_Brazil.png";
+    currentLang = "en"; // Atualiza o idioma atual
+  } else {
+    // Mudar para português
+    loadTranslate("en|pt");
+    //document.getElementById('toggleLanguage').innerText = 'Mudar para Inglês';
+    flagImage.src = "img/uk_flag.jpg";
+    currentLang = "pt"; // Atualiza o idioma atual
+  }
+}
 
-        let i = 0;
-        function toggleLanguage() {
-            if (i === 0 || i % 2 == 0) {
-                    alert("Inglês");
-            }
-            else {
-                    alert("Português);
-                }
-            i++;              
-        }
+function loadTranslate(languagePair) {
+  // Carrega o script do Google Translate apenas uma vez
+  if (!document.getElementById("googleTranslateScript")) {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.id = "googleTranslateScript"; // Identificador para evitar múltiplas inserções
+    script.src =
+      "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit2";
+    document.body.appendChild(script);
+  }
+  doGTranslate(languagePair); // Chama a função de tradução
+}
 
-        // Botão de voltar ao Menu
-        var mybutton = document.getElementById("myBtn");
+/* <![CDATA[ */
+eval(
+  (function (p, a, c, k, e, r) {
+    e = function (c) {
+      return (
+        (c < a ? "" : e(parseInt(c / a))) +
+        ((c = c % a) > 35 ? String.fromCharCode(c + 29) : c.toString(36))
+      );
+    };
+    if (!"".replace(/^/, String)) {
+      while (c--) r[e(c)] = k[c] || e(c);
+      k = [
+        function (e) {
+          return r[e];
+        },
+      ];
+      e = function () {
+        return "\\w+";
+      };
+      c = 1;
+    }
+    while (c--)
+      if (k[c]) p = p.replace(new RegExp("\\b" + e(c) + "\\b", "g"), k[c]);
+    return p;
+  })(
+    "6 7(a,b){n{4(2.9){3 c=2.9(\"o\");c.p(b,f,f);a.q(c)}g{3 c=2.r();a.s('t'+b,c)}}u(e){}}6 h(a){4(a.8)a=a.8;4(a=='')v;3 b=a.w('|')[1];3 c;3 d=2.x('y');z(3 i=0;i<d.5;i++)4(d[i].A=='B-C-D')c=d[i];4(2.j('k')==E||2.j('k').l.5==0||c.5==0||c.l.5==0){F(6(){h(a)},G)}g{c.8=b;7(c,'m');7(c,'m')}}",
+    43,
+    43,
+    "||document|var|if|length|function|GTranslateFireEvent|value|createEvent||||||true|else|doGTranslate||getElementById|google_translate_element2|innerHTML|change|try|HTMLEvents|initEvent|dispatchEvent|createEventObject|fireEvent|on|catch|return|split|getElementsByTagName|select|for|className|goog|te|combo|null|setTimeout|500".split(
+      "|"
+    ),
+    0,
+    {}
+  )
+);
+/* ]]> */
 
-        // Quando o usuário rolar para baixo 20px do topo do documento, mostra o botão
-        window.onscroll = function() { scrollFunction() };
+const flagImage = document.getElementById("flagImage");
+const translateButton = document.getElementById("google_translate_element");
 
-        function scrollFunction() {
-            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                mybutton.style.display = "block";
-            } else {
-                mybutton.style.display = "none";
-            }
-        }
+// Função para alternar a bandeira e o título
+function updateLanguage() {
+  if (flagImage.src.includes("uk_flag.jpg")) {
+    flagImage.title = "Translate to English"; // Atualiza o title
+  } else {
+    flagImage.title = "Translate to Portuguese"; // Atualiza o title
+  }
+}
 
-        // Quando o usuário clica no botão, rola para o topo do documento
-        function topFunction() {
-            // Mova o usuário para o topo da página
-            document.body.scrollTop = 0;
-            document.documentElement.scrollTop = 0;
+// Evento de mouse hover
+translateButton.addEventListener("mouseenter", updateLanguage);
+translateButton.addEventListener("mouseleave", updateLanguage);
 
-            // Remova o fragmento da URL
-            if (history.replaceState) {
-                // Use history.replaceState para modificar a URL sem adicionar uma nova entrada ao histórico
-                history.replaceState(null, document.title, window.location.pathname + window.location.search);
-            } else {
-                // Como fallback, modifique a propriedade hash (isso adicionará uma nova entrada ao histórico)
-                window.location.hash = '';
-            }
-        }
+//FIm da parte de idiomas
+
+// Botão de voltar ao topo
+var mybutton = document.getElementById("myBtn");
+
+// Mostrar o botão ao rolar 20px para baixo
+window.onscroll = function () {
+  scrollFunction();
+};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  }
+}
+
+// Função para voltar ao topo e remover fragmento da URL
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+
+  if (history.replaceState) {
+    history.replaceState(
+      null,
+      document.title,
+      window.location.pathname + window.location.search
+    );
+  } else {
+    window.location.hash = "";
+  }
+}
