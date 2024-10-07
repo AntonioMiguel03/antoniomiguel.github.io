@@ -43,8 +43,8 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    // Associa a função de mudança de idioma ao clique da bandeira
-    flagImage.addEventListener('click', changeLanguageByButtonClick);
+    // Associa a função de mudança de idioma ao clique do link que contém a bandeira
+    document.getElementById("legendaIdioma").addEventListener('click', changeLanguageByButtonClick);
 
     //Botao de voltar ao Menu
     var mybutton = document.getElementById("myBtn");
