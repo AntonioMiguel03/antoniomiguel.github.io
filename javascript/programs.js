@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", function() {
     const mainMenu = document.querySelector('.mainMenu');
     const closeMenu = document.querySelector('.closeMenu');
     const openMenu = document.querySelector('.openMenu');
+    const flagImage = document.getElementById("flagImage");
+    const languageInput = document.getElementById("language");
 
     openMenu.addEventListener('click', show);
     closeMenu.addEventListener('click', close);
@@ -15,101 +17,34 @@ document.addEventListener("DOMContentLoaded", function() {
         mainMenu.style.top = '-100%';
     }
 
-    // Função para carregar o script do Google Translate dinamicamente
-    function loadGoogleTranslateScript() {
-        return new Promise((resolve, reject) => {
-            const script = document.createElement('script');
-            script.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-            script.async = true;
-            script.onload = resolve;
-            script.onerror = reject;
-            document.body.appendChild(script);
-        });
-    }
-
-    // Inicialização do Google Translate
-    function googleTranslateElementInit() {	
-        new google.translate.TranslateElement({ pageLanguage: "pt" }, 'google_translate_element');
-    }
-
-    // Carregar o script e inicializar o Google Translate
-    loadGoogleTranslateScript().then(() => {
-        console.log("Google Translate script loaded successfully");
-        googleTranslateElementInit(); // Inicializa o Google Translate
-    }).catch(error => {
-        console.error("Failed to load Google Translate script", error);
-    });
-
-    var flagImage = document.getElementById("flagImage");  
-
     if (flagImage) {
         flagImage.title = "Translate to English";
     } else {
         console.error("Flag image not found.");
     }
 
-    // Função chamada ao clicar para mudar o idioma
     function changeLanguageByButtonClick() {
         console.log("Clicou"); // Informa que o botão foi clicado
-
-        var flagImage = document.getElementById("flagImage");
 
         if (!flagImage) {
             console.error("Flag image not found.");
             return; // Sai da função se o elemento não for encontrado
         }
 
-        flagImage.title = "Translate to English";
-
-        // Verificar o idioma atual da bandeira e ajustar o valor da entrada de idioma
-        var languageInput = document.getElementById("language");
-        var selectField = document.querySelector("#google_translate_element select");
-
-        if (!selectField) {
-            console.error("Google Translate select element not found.");
-            return;
-        }
-
+        // Verificar se a bandeira atual é a do Reino Unido
         if (flagImage.src.includes("uk_flag.jpg")) {
-            flagImage.src = "img/flag_of_Brazil.png";
-            languageInput.value = "en";
-            flagImage.title = "Traduzir para o Português";
+            flagImage.src = "img/flag_of_Brazil.png"; // Muda para a bandeira do Brasil
+            languageInput.value = "en"; // Atualiza o valor do input
+            flagImage.title = "Traduzir para o Português"; // Atualiza o título
         } else {
-            flagImage.src = "img/uk_flag.jpg";
-            languageInput.value = "pt";
-            changeLanguagePortuguese();
-            return;
-        }
-
-        // Muda o idioma usando o selectField
-        changeLanguage(languageInput.value, selectField);
-    }
-
-    // Função que muda o idioma para português
-    function changeLanguagePortuguese() {
-        console.log("Clicou para mudar para português"); // Informa que o botão foi clicado para mudar para o português
-        var languageInput = "pt";
-        var selectField = document.querySelector("#google_translate_element select");
-
-        if (!selectField) {
-            console.error("Google Translate select element not found.");
-            return;
-        }
-
-        changeLanguage(languageInput, selectField);
-    }
-
-    // Função genérica para mudar o idioma
-    function changeLanguage(language, selectField) {
-        for (var i = 0; i < selectField.children.length; i++) {
-            var option = selectField.children[i];
-            if (option.value == language) {
-                selectField.selectedIndex = i;
-                selectField.dispatchEvent(new Event('change'));
-                break;
-            }
+            flagImage.src = "img/uk_flag.jpg"; // Muda para a bandeira do Reino Unido
+            languageInput.value = "pt"; // Atualiza o valor do input
+            flagImage.title = "Translate to English"; // Atualiza o título
         }
     }
+
+    // Associa a função de mudança de idioma ao clique da bandeira
+    flagImage.addEventListener('click', changeLanguageByButtonClick);
 
     //Botao de voltar ao Menu
     var mybutton = document.getElementById("myBtn");
