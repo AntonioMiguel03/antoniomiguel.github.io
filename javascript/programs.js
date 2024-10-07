@@ -62,23 +62,27 @@ function changeLanguageByButtonClick() {
 }
 
 
-function changeLanguagePortuguese() {	
-	var languageInput = "pt";
-	var selectField = document.querySelector("#google_translate_element select");
+function changeLanguagePortuguese() {
+    var languageInput = "pt";
+    var selectField = document.querySelector("#google_translate_element select");
 
-	for (var i = 0; i < selectField.children.length; i++) {
-	  var option = selectField.children[i];
-	  // Encontrar o idioma desejado e alterar o idioma anterior do campo de seleção oculto
-	  if (option.value == languageInput) {
-		selectField.selectedIndex = i;
-		
-		// Acionar o evento 'change' posteriormente para traduzir usando a biblioteca do Google
-		selectField.dispatchEvent(new Event('change'));		
-		location.reload();
-		break;		
-	  }
-	}
+    // Verificação se o selectField existe
+    if (!selectField) {
+        console.error("Select field for Google Translate not found. Please ensure the Google Translate script is fully loaded.");
+        return; // Impede a execução caso o selectField não esteja disponível
+    }
+
+    for (var i = 0; i < selectField.children.length; i++) {
+        var option = selectField.children[i];
+        if (option.value == languageInput) {
+            selectField.selectedIndex = i;
+            selectField.dispatchEvent(new Event('change'));
+            location.reload();
+            break;		
+        }
+    }
 }
+
 
 
 
