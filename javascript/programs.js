@@ -25,38 +25,7 @@ document.addEventListener("DOMContentLoaded", function() {
         flagImage.title = "Translate to English";
     }
     
-    function changeLanguageByButtonClick() {
-        console.log("Clicou"); // Informa que o botão foi clicado
 
-        // Verificar se a bandeira atual é a do Reino Unido
-        if (flagImage.src.includes("uk_flag.jpg")) {
-            flagImage.src = "img/flag_of_Brazil.png"; // Muda para a bandeira do Brasil
-            languageInput.value = "en"; // Atualiza o valor do input
-            flagImage.title = "Traduzir para o Português"; // Atualiza o título
-            changeGoogleLanguage("en"); // Muda o idioma no Google Translate
-        } else {
-            flagImage.src = "img/uk_flag.jpg"; // Muda para a bandeira do Reino Unido
-            languageInput.value = "pt"; // Atualiza o valor do input
-            flagImage.title = "Translate to English"; // Atualiza o título
-            changeGoogleLanguage("pt"); // Muda o idioma no Google Translate
-        }
-    }
-
-    function changeGoogleLanguage(language) {
-        var selectField = document.querySelector("#google_translate_element select");
-
-        // Se o elemento não existir, aguardamos até que ele apareça
-        if (!selectField) {
-            console.error("Google Translate select element not found. Retrying...");
-            setTimeout(function() { 
-                changeGoogleLanguage(language); // Tenta novamente após 500ms
-            }, 500);
-            return;
-        }
-
-        selectField.value = language; // Altera o valor do select
-        selectField.dispatchEvent(new Event('change')); // Dispara o evento de mudança
-    }
 
     //Botao de voltar ao Menu
     var mybutton = document.getElementById("myBtn");
