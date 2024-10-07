@@ -6,16 +6,15 @@ document.addEventListener("DOMContentLoaded", function() {
     openMenu.addEventListener('click', show);
     closeMenu.addEventListener('click', close);
 
-    function show(){
+    function show() {
         mainMenu.style.display = 'flex';
         mainMenu.style.top = '0';
     }
 
-    function close(){
+    function close() {
         mainMenu.style.top = '-100%';
     }
 
-    /*debugger;*/
     function googleTranslateElementInit() {	
         new google.translate.TranslateElement({ pageLanguage: "pt" }, 'google_translate_element');
         waitForTranslateElement();
@@ -91,30 +90,25 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Função para aguardar até que o Google Translate carregue o elemento <select>
     function waitForTranslateElement() {
-        var selectField = document.querySelector("#google_translate_element select");
+        var attempts = 0; // Contador de tentativas
+        var maxAttempts = 10; // Máximo de tentativas antes de desistir
 
-        if (!selectField) {
-            // Usa MutationObserver para observar mudanças no DOM
-            const observer = new MutationObserver(function(mutations) {
-                mutations.forEach(function(mutation) {
-                    if (mutation.addedNodes.length) {
-                        // Verifica se algum dos nós adicionados é o <select> do Google Translate
-                        selectField = document.querySelector("#google_translate_element select");
-                        if (selectField) {
-                            console.log("Google Translate select element found.");
-                            observer.disconnect(); // Para de observar após encontrar o elemento
-                        }
-                    }
-                });
-            });
+        var intervalId = setInterval(function () {
+            var selectField = document.querySelector("#google_translate_element select");
 
-            const targetNode = document.getElementById('google_translate_element');
-            if (targetNode) {
-                observer.observe(targetNode, { childList: true, subtree: true });
-            } else {
-                console.error("Google Translate element not found.");
+            if (selectField) {
+                console.log("Google Translate select element found.");
+                clearInterval(intervalId); // Para de verificar quando o elemento estiver presente
+                return; // Sai da função assim que o elemento for encontrado
             }
-        }
+
+            attempts++;
+            if (attempts >= maxAttempts) {
+                console.error("Google Translate select element not found after several attempts.");
+                clearInterval(intervalId);
+            }
+
+        }, 500); // Verifica a cada 500ms
     }
 
     //Botao de voltar ao Menu
