@@ -1,4 +1,3 @@
-// Certifique-se de que o código será executado após o DOM estar completamente carregado
 document.addEventListener("DOMContentLoaded", function() {
     const mainMenu = document.querySelector('.mainMenu');
     const closeMenu = document.querySelector('.closeMenu');
@@ -62,19 +61,12 @@ document.addEventListener("DOMContentLoaded", function() {
             return;
         }
 
-        for (var i = 0; i < selectField.children.length; i++) {
-            var option = selectField.children[i];
-            if (option.value == languageInput.value) {
-                selectField.selectedIndex = i;
-                selectField.dispatchEvent(new Event('change'));
-                break;
-            }
-        }
+        // Muda o idioma usando o selectField
+        changeLanguage(languageInput.value, selectField);
     }
 
     function changeLanguagePortuguese() {
         console.log("Clicou para mudar para português"); // Informa que o botão foi clicado para mudar para o português
-
         var languageInput = "pt";
         var selectField = document.querySelector("#google_translate_element select");
 
@@ -84,12 +76,15 @@ document.addEventListener("DOMContentLoaded", function() {
             return;
         }
 
+        changeLanguage(languageInput, selectField);
+    }
+
+    function changeLanguage(language, selectField) {
         for (var i = 0; i < selectField.children.length; i++) {
             var option = selectField.children[i];
-            if (option.value == languageInput) {
+            if (option.value == language) {
                 selectField.selectedIndex = i;
                 selectField.dispatchEvent(new Event('change'));
-                location.reload();
                 break;
             }
         }
