@@ -1,81 +1,64 @@
-//folha do javascript
-
+// Folha do javascript
 const mainMenu = document.querySelector('.mainMenu');
 const closeMenu = document.querySelector('.closeMenu');
 const openMenu = document.querySelector('.openMenu');
 
+openMenu.addEventListener('click', show);
+closeMenu.addEventListener('click', close);
 
-
-
-openMenu.addEventListener('click',show);
-closeMenu.addEventListener('click',close);
-
-function show(){
+function show() {
     mainMenu.style.display = 'flex';
     mainMenu.style.top = '0';
 }
-function close(){
+
+function close() {
     mainMenu.style.top = '-100%';
 }
 
-/*debugger;*/
 function googleTranslateElementInit() {	
   new google.translate.TranslateElement({ pageLanguage: "pt" }, 'google_translate_element');
 }
 
 var flagImage = document.getElementById("flagImage");  
-flagImage.title = "Translate to English";
+flagImage.title = "Traduzir para o Inglês";
+
+let currentLanguage = 'pt'; // Estado inicial
 
 function changeLanguageByButtonClick() {
- /*debugger; F10 vai para frente, F8 vai para o final do codigo*/
-  var languageInput = document.getElementById("language").value;
   var selectField = document.querySelector("#google_translate_element select");
-  var flagImage = document.getElementById("flagImage");  
   
-  flagImage.title = "Translate to English";
-
-  if (flagImage) {
-    if (flagImage.src.includes("uk_flag.jpg")) {
-      // Alterar para bandeira do Brasil e idioma para "en"
-      flagImage.src = "img/flag_of_Brazil.png";
-      languageInput = "en";	  
-	  
-	  flagImage.title = "Traduzir para o Português";
-    } else {
-      // Alterar para bandeira do Reino Unido e idioma para "pt"
+  if (currentLanguage === 'pt') {
+      // Muda para inglês
       flagImage.src = "img/uk_flag.jpg";
-      languageInput = "pt";
-	  /*location.reload();*/
-	  
-	  changeLanguagePortuguese();
-	  return;
-    }
+      currentLanguage = 'en'; // Atualiza o estado
+      flagImage.title = "Traduzir para o Português"; // Atualiza o título
+  } else {
+      // Muda para português
+      flagImage.src = "img/flag_of_Brazil.png";
+      currentLanguage = 'pt'; // Atualiza o estado
+      flagImage.title = "Traduzir para o Inglês"; // Atualiza o título
+  }
 
-    for (var i = 0; i < selectField.children.length; i++) {
+  // Define o idioma no campo de seleção oculto
+  for (var i = 0; i < selectField.children.length; i++) {
       var option = selectField.children[i];
-      // Encontrar o idioma desejado e alterar o idioma anterior do campo de seleção oculto
-      if (option.value == languageInput) {
-        selectField.selectedIndex = i;
-		
-        // Acionar o evento 'change' posteriormente para traduzir usando a biblioteca do Google
-        selectField.dispatchEvent(new Event('change'));		
-        break;		
+      if (option.value === currentLanguage) {
+          selectField.selectedIndex = i;
+          selectField.dispatchEvent(new Event('change')); // Aciona o evento 'change'
+          break;
       }
-    }
   }
 }
 
+// A lógica para alternar para o português continua a mesma
 function changeLanguagePortuguese() {	
 	var languageInput = "pt";
 	var selectField = document.querySelector("#google_translate_element select");
 
 	for (var i = 0; i < selectField.children.length; i++) {
 	  var option = selectField.children[i];
-	  // Encontrar o idioma desejado e alterar o idioma anterior do campo de seleção oculto
 	  if (option.value == languageInput) {
 		selectField.selectedIndex = i;
-		
-		// Acionar o evento 'change' posteriormente para traduzir usando a biblioteca do Google
 		selectField.dispatchEvent(new Event('change'));		
 		location.reload();
 		break;		
@@ -83,16 +66,10 @@ function changeLanguagePortuguese() {
 	}
 }
 
-
-
-
-
-
-
-//Botao de voltar ao Menu
+// Botão de voltar ao Menu
 var mybutton = document.getElementById("myBtn");
 
-// When the user scrolls down 20px from the top of the document, show the button
+// Quando o usuário rolar para baixo 20px a partir do topo do documento, mostre o botão
 window.onscroll = function() {scrollFunction()};
 
 function scrollFunction() {
@@ -103,18 +80,15 @@ function scrollFunction() {
   }
 }
 
-// When the user clicks on the button, scroll to the top of the document
+// Quando o usuário clica no botão, rolar para o topo do documento
 function topFunction() {
-  // Mova o usuário para o topo da página
   document.body.scrollTop = 0;
   document.documentElement.scrollTop = 0;
 
-  // Remova o fragmento da URL
+  // Remove o fragmento da URL
   if (history.replaceState) {
-    // Use history.replaceState para modificar a URL sem adicionar uma nova entrada ao histórico
     history.replaceState(null, document.title, window.location.pathname + window.location.search);
   } else {
-    // Como fallback, modifique a propriedade hash (isso adicionará uma nova entrada ao histórico)
     window.location.hash = '';
   }
 }
