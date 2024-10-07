@@ -16,38 +16,65 @@ function close() {
 }
 
 function googleTranslateElementInit() {	
-  new google.translate.TranslateElement({ pageLanguage: "pt" }, 'google_translate_element');
+    new google.translate.TranslateElement({ pageLanguage: "pt" }, 'google_translate_element');
 }
 
 var flagImage = document.getElementById("flagImage");  
 flagImage.title = "Traduzir para o Inglês";
 
 let currentLanguage = 'pt'; // Estado inicial
+let clickCount = 0; // Contador de cliques
 
 function changeLanguageByButtonClick() {
-  var selectField = document.querySelector("#google_translate_element select");
-  
-  if (currentLanguage === 'pt') {
-      // Muda para inglês
-      flagImage.src = "img/uk_flag.jpg";
-      currentLanguage = 'en'; // Atualiza o estado
-      flagImage.title = "Traduzir para o Português"; // Atualiza o título
-  } else {
-      // Muda para português
-      flagImage.src = "img/flag_of_Brazil.png";
-      currentLanguage = 'pt'; // Atualiza o estado
-      flagImage.title = "Traduzir para o Inglês"; // Atualiza o título
-  }
+    clickCount++; // Incrementa o contador a cada clique
+    var selectField = document.querySelector("#google_translate_element select");
+    
+    // Reseta a lógica após o terceiro clique
+    if (clickCount === 3) {
+        resetToggle(); // Chama a função de reset
+        return; // Para a execução da função
+    }
 
-  // Define o idioma no campo de seleção oculto
-  for (var i = 0; i < selectField.children.length; i++) {
-      var option = selectField.children[i];
-      if (option.value === currentLanguage) {
-          selectField.selectedIndex = i;
-          selectField.dispatchEvent(new Event('change')); // Aciona o evento 'change'
-          break;
-      }
-  }
+    if (currentLanguage === 'pt') {
+        // Muda para inglês
+        flagImage.src = "img/uk_flag.jpg";
+        currentLanguage = 'en'; // Atualiza o estado
+        flagImage.title = "Traduzir para o Português"; // Atualiza o título
+    } else {
+        // Muda para português
+        flagImage.src = "img/flag_of_Brazil.png";
+        currentLanguage = 'pt'; // Atualiza o estado
+        flagImage.title = "Traduzir para o Inglês"; // Atualiza o título
+    }
+
+    // Define o idioma no campo de seleção oculto
+    for (var i = 0; i < selectField.children.length; i++) {
+        var option = selectField.children[i];
+        if (option.value === currentLanguage) {
+            selectField.selectedIndex = i;
+            selectField.dispatchEvent(new Event('change')); // Aciona o evento 'change'
+            break;
+        }
+    }
+}
+
+// Função para resetar a lógica do botão
+function resetToggle() {
+    clickCount = 0; // Reseta o contador de cliques
+    currentLanguage = 'pt'; // Reseta o estado do idioma
+    flagImage.src = "img/flag_of_Brazil.png"; // Reseta a imagem para a bandeira do Brasil
+    flagImage.title = "Traduzir para o Inglês"; // Reseta o título
+
+    // Reseta o campo de seleção oculto para o português
+    var selectField = document.querySelector("#google_translate_element select");
+    for (var i = 0; i < selectField.children.length; i++) {
+        var option = selectField.children[i];
+        if (option.value === currentLanguage) {
+            selectField.selectedIndex = i;
+            selectField.dispatchEvent(new Event('change')); // Aciona o evento 'change'
+            break;
+        }
+    }
 }
 
 // A lógica para alternar para o português continua a mesma
