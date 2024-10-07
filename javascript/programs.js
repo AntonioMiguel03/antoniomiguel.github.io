@@ -15,10 +15,30 @@ document.addEventListener("DOMContentLoaded", function() {
         mainMenu.style.top = '-100%';
     }
 
+    // Função para carregar o script do Google Translate dinamicamente
+    function loadGoogleTranslateScript() {
+        return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+            script.async = true;
+            script.onload = resolve;
+            script.onerror = reject;
+            document.body.appendChild(script);
+        });
+    }
+
+    // Inicialização do Google Translate
     function googleTranslateElementInit() {	
         new google.translate.TranslateElement({ pageLanguage: "pt" }, 'google_translate_element');
-        waitForTranslateElement();
     }
+
+    // Carregar o script e inicializar o Google Translate
+    loadGoogleTranslateScript().then(() => {
+        console.log("Google Translate script loaded successfully");
+        googleTranslateElementInit(); // Inicializa o Google Translate
+    }).catch(error => {
+        console.error("Failed to load Google Translate script", error);
+    });
 
     var flagImage = document.getElementById("flagImage");  
 
@@ -28,6 +48,7 @@ document.addEventListener("DOMContentLoaded", function() {
         console.error("Flag image not found.");
     }
 
+    // Função chamada ao clicar para mudar o idioma
     function changeLanguageByButtonClick() {
         console.log("Clicou"); // Informa que o botão foi clicado
 
@@ -45,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function() {
         var selectField = document.querySelector("#google_translate_element select");
 
         if (!selectField) {
-            console.error("Google Translate select element not found. Retrying...");
+            console.error("Google Translate select element not found.");
             return;
         }
 
@@ -64,19 +85,21 @@ document.addEventListener("DOMContentLoaded", function() {
         changeLanguage(languageInput.value, selectField);
     }
 
+    // Função que muda o idioma para português
     function changeLanguagePortuguese() {
         console.log("Clicou para mudar para português"); // Informa que o botão foi clicado para mudar para o português
         var languageInput = "pt";
         var selectField = document.querySelector("#google_translate_element select");
 
         if (!selectField) {
-            console.error("Google Translate select element not found. Retrying...");
+            console.error("Google Translate select element not found.");
             return;
         }
 
         changeLanguage(languageInput, selectField);
     }
 
+    // Função genérica para mudar o idioma
     function changeLanguage(language, selectField) {
         for (var i = 0; i < selectField.children.length; i++) {
             var option = selectField.children[i];
@@ -86,29 +109,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 break;
             }
         }
-    }
-
-    // Função para aguardar até que o Google Translate carregue o elemento <select>
-    function waitForTranslateElement() {
-        var attempts = 0; // Contador de tentativas
-        var maxAttempts = 10; // Máximo de tentativas antes de desistir
-
-        var intervalId = setInterval(function () {
-            var selectField = document.querySelector("#google_translate_element select");
-
-            if (selectField) {
-                console.log("Google Translate select element found.");
-                clearInterval(intervalId); // Para de verificar quando o elemento estiver presente
-                return; // Sai da função assim que o elemento for encontrado
-            }
-
-            attempts++;
-            if (attempts >= maxAttempts) {
-                console.error("Google Translate select element not found after several attempts.");
-                clearInterval(intervalId);
-            }
-
-        }, 500); // Verifica a cada 500ms
     }
 
     //Botao de voltar ao Menu
