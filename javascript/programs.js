@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
     /*debugger;*/
     function googleTranslateElementInit() {	
         new google.translate.TranslateElement({ pageLanguage: "pt" }, 'google_translate_element');
+        waitForTranslateElement();
     }
 
     var flagImage = document.getElementById("flagImage");  
@@ -46,7 +47,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (!selectField) {
             console.error("Google Translate select element not found. Retrying...");
-            waitForTranslateElement(changeLanguageByButtonClick); // Tenta novamente até o elemento estar disponível
             return;
         }
 
@@ -72,7 +72,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (!selectField) {
             console.error("Google Translate select element not found. Retrying...");
-            waitForTranslateElement(changeLanguagePortuguese); // Tenta novamente até o elemento estar disponível
             return;
         }
 
@@ -91,14 +90,31 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Função para aguardar até que o Google Translate carregue o elemento <select>
-    function waitForTranslateElement(callback) {
-        var intervalId = setInterval(function () {
-            var selectField = document.querySelector("#google_translate_element select");
-            if (selectField) {
-                clearInterval(intervalId); // Para de verificar quando o elemento estiver presente
-                callback(); // Executa a função original
+    function waitForTranslateElement() {
+        var selectField = document.querySelector("#google_translate_element select");
+
+        if (!selectField) {
+            // Usa MutationObserver para observar mudanças no DOM
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.addedNodes.length) {
+                        // Verifica se algum dos nós adicionados é o <select> do Google Translate
+                        selectField = document.querySelector("#google_translate_element select");
+                        if (selectField) {
+                            console.log("Google Translate select element found.");
+                            observer.disconnect(); // Para de observar após encontrar o elemento
+                        }
+                    }
+                });
+            });
+
+            const targetNode = document.getElementById('google_translate_element');
+            if (targetNode) {
+                observer.observe(targetNode, { childList: true, subtree: true });
+            } else {
+                console.error("Google Translate element not found.");
             }
-        }, 500); // Verifica a cada 500ms
+        }
     }
 
     //Botao de voltar ao Menu
@@ -124,5 +140,4 @@ document.addEventListener("DOMContentLoaded", function() {
             window.location.hash = '';
         }
     }
-
 });
