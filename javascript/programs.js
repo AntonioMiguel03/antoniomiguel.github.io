@@ -54,6 +54,9 @@ function setLanguage(language) {
     selectField.style.display = "none"; // Oculta o select
     selectField.value = language; // Define o valor do idioma
 
+    console.log(language);
+    console.log(selectField.value);
+
     var option = document.createElement("option");
     option.value = language;
     selectField.appendChild(option);
