@@ -24,32 +24,7 @@
         flagImage.title = "Traduzir para o Inglês"; // O idioma padrão é português
 
         function toggleLanguage() {
-            var selectField = document.querySelector("#google_translate_element select");
-            var languageInput = document.getElementById("language").value;
-
-            // Verificar o idioma atual e alternar
-            if (languageInput === "pt") {
-                // Troca para inglês
-                languageInput = "en";  
-                flagImage.src = "img/flag_of_Brazil.png"; // Altera para a bandeira do Brasil
-                flagImage.title = "Traduzir para o Português"; // Atualiza o título
-            } else {
-                // Volta para português
-                languageInput = "pt"; 
-                flagImage.src = "img/uk_flag.jpg"; // Altera para a bandeira do Reino Unido
-                flagImage.title = "Traduzir para o Inglês"; // Atualiza o título
-            }
-
-            // Atualiza o campo oculto e dispara o evento de mudança
-            document.getElementById("language").value = languageInput;
-            for (var i = 0; i < selectField.children.length; i++) {
-                var option = selectField.children[i];
-                if (option.value === languageInput) {
-                    selectField.selectedIndex = i;
-                    selectField.dispatchEvent(new Event('change'));
-                    break;
-                }
-            }
+            alert("Teste");
         }
 
         // Botão de voltar ao Menu
