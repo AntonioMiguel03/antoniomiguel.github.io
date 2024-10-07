@@ -23,7 +23,7 @@
         var flagImage = document.getElementById("flagImage");  
         flagImage.title = "Traduzir para o Inglês"; // O idioma padrão é português
 
-        const i = 0;
+        let i = 0;
         function toggleLanguage() {
             if (i === 0 || i % 2 == 0)
                     alert("Inglês");
