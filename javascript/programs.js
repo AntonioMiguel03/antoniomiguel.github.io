@@ -4,6 +4,10 @@ document.addEventListener("DOMContentLoaded", function() {
     const openMenu = document.querySelector('.openMenu');
     const flagImage = document.getElementById("flagImage");
     const languageInput = document.getElementById("language");
+    
+    // Adicione o event listener após o DOM estar carregado
+    const translateButton = document.getElementById("legendaIdioma");
+    translateButton.addEventListener('click', changeLanguageByButtonClick);
 
     openMenu.addEventListener('click', show);
     closeMenu.addEventListener('click', close);
@@ -19,8 +23,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     if (flagImage) {
         flagImage.title = "Translate to English";
-    } else {
-        console.error("Flag image not found.");
     }
 
     function changeLanguageByButtonClick() {
@@ -36,15 +38,38 @@ document.addEventListener("DOMContentLoaded", function() {
             flagImage.src = "img/flag_of_Brazil.png"; // Muda para a bandeira do Brasil
             languageInput.value = "en"; // Atualiza o valor do input
             flagImage.title = "Traduzir para o Português"; // Atualiza o título
+            changeGoogleLanguage("en"); // Muda o idioma no Google Translate
         } else {
             flagImage.src = "img/uk_flag.jpg"; // Muda para a bandeira do Reino Unido
             languageInput.value = "pt"; // Atualiza o valor do input
             flagImage.title = "Translate to English"; // Atualiza o título
+            changeGoogleLanguage("pt"); // Muda o idioma no Google Translate
         }
     }
 
-    // Associa a função de mudança de idioma ao clique do link que contém a bandeira
-    document.getElementById("legendaIdioma").addEventListener('click', changeLanguageByButtonClick);
+    function changeGoogleLanguage(language) {
+        // Aqui nós tentamos encontrar o elemento de seleção do Google Translate
+        var selectField = document.querySelector("#google_translate_element select");
+        if (!selectField) {
+            console.error("Google Translate select element not found. Retrying...");
+            waitForTranslateElement(() => changeGoogleLanguage(language)); // Chama novamente após encontrar o elemento
+            return;
+        }
+
+        selectField.value = language; // Altera o valor do select
+        selectField.dispatchEvent(new Event('change')); // Dispara o evento de mudança
+    }
+
+    // Função para aguardar até que o Google Translate carregue o elemento <select>
+    function waitForTranslateElement(callback) {
+        var intervalId = setInterval(function () {
+            var selectField = document.querySelector("#google_translate_element select");
+            if (selectField) {
+                clearInterval(intervalId); // Para de verificar quando o elemento estiver presente
+                callback(); // Executa a função original
+            }
+        }, 500); // Verifica a cada 500ms
+    }
 
     //Botao de voltar ao Menu
     var mybutton = document.getElementById("myBtn");
