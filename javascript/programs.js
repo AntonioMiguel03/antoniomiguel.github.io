@@ -27,6 +27,8 @@ var flagImage = document.getElementById("flagImage");
 flagImage.title = "Translate to English";
 
 function changeLanguageByButtonClick() {
+    console.log("Clicou"); // Informa que o botão foi clicado
+
     var flagImage = document.getElementById("flagImage");  
 
     if (!flagImage) {
@@ -68,6 +70,8 @@ function changeLanguageByButtonClick() {
 }
 
 function changeLanguagePortuguese() {
+    console.log("Clicou para mudar para português"); // Informa que o botão foi clicado para mudar para o português
+
     var languageInput = "pt";
     var selectField = document.querySelector("#google_translate_element select");
 
@@ -98,6 +102,7 @@ function waitForTranslateElement(callback) {
         }
     }, 500); // Verifica a cada 500ms
 }
+
 
 
 
